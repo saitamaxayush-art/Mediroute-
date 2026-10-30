@@ -1,0 +1,42 @@
+{
+  "h-shivajinagar": {
+    "lng": 73.8475,
+    "lat": 18.5308,
+    "road": "Ganeshkhind Road"
+  },
+  "h-kothrud": {
+    "lng": 73.8077,
+    "lat": 18.50739,
+    "road": "Paud Road"
+  },
+  "h-aundh": {
+    "lng": 73.80857,
+    "lat": 18.55874,
+    "road": ""
+  },
+  "h-baner": {
+    "lng": 73.78673,
+    "lat": 18.55933,
+    "road": ""
+  },
+  "h-vimannagar": {
+    "lng": 73.9143,
+    "lat": 18.56789,
+    "road": "Anand Vidya Niketan High School Road"
+  },
+  "h-hadapsar": {
+    "lng": 73.926,
+    "lat": 18.50892,
+    "road": "Magarpatta Rear Approach Road"
+  },
+  "h-swargate": {
+    "lng": 73.8636,
+    "lat": 18.5018,
+    "road": ""
+  },
+  "h-katraj": {
+    "lng": 73.8677,
+    "lat": 18.45714,
+    "road": ""
+  }
+}

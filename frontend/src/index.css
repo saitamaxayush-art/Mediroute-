@@ -1,0 +1,249 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --paper: #f5f1ea;
+  --paper-2: #ede7da;
+  --line: #d9d2c3;
+  --ink: #171717;
+  --ink-2: #4a463e;
+  --route: #0b6b3a;
+  --route-soft: #d6e8dc;
+  --signal: #c8261d;
+  --amber: #b7790c;
+  --white: #ffffff;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --shadow-float: 0 1px 2px rgba(0, 0, 0, 0.06), 0 8px 24px rgba(0, 0, 0, 0.06);
+  color-scheme: light;
+}
+
+html {
+  background: var(--paper);
+  color: var(--ink);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--paper);
+  font-family: 'Schibsted Grotesk', system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--route-soft);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--route);
+  outline-offset: 2px;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+@layer components {
+  .mono {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 12px;
+  }
+  .headline {
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+  }
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+  .card {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+  }
+  .float {
+    box-shadow: var(--shadow-float);
+  }
+}
+
+/* Ambulance marker */
+.amb-marker {
+  width: 16px;
+  height: 34px;
+  pointer-events: none;
+  will-change: transform;
+}
+.amb-scale {
+  transform-origin: 50% 50%;
+  filter: drop-shadow(0 1px 1.5px rgba(0, 0, 0, 0.25));
+}
+.amb-l1,
+.amb-l2 {
+  animation: amb-flash 800ms steps(1, end) infinite;
+}
+.amb-l2 {
+  animation-delay: -400ms;
+}
+@keyframes amb-flash {
+  0% {
+    fill: #c8261d;
+  }
+  50% {
+    fill: #ffffff;
+  }
+}
+.lights-off .amb-l1,
+.lights-off .amb-l2 {
+  animation: none;
+  fill: #d9d2c3;
+}
+
+/* Crash pin */
+.crash-pin {
+  position: relative;
+  display: block;
+  width: 14px;
+  height: 14px;
+}
+.crash-dot {
+  position: absolute;
+  inset: 3px;
+  background: var(--signal);
+  border: 1.5px solid #fff;
+}
+.crash-ring {
+  position: absolute;
+  inset: 0;
+  border: 1.5px solid var(--signal);
+  border-radius: 50%;
+  animation: crash-pulse 1.8s var(--ease) infinite;
+}
+.crash-ring-2 {
+  animation-delay: 0.9s;
+}
+@keyframes crash-pulse {
+  from {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  to {
+    transform: scale(3.4);
+    opacity: 0;
+  }
+}
+
+.blink {
+  animation: blink 1.2s steps(1, end) infinite;
+}
+@keyframes blink {
+  50% {
+    opacity: 0.2;
+  }
+}
+
+/* Footer wordmark: outlined, solid green under the cursor. */
+.wordmark {
+  font-weight: 700;
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+}
+.wordmark-outline {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--ink);
+}
+.wordmark-fill {
+  color: var(--route);
+  -webkit-mask-image: radial-gradient(circle 110px at var(--mx, -999px) var(--my, -999px), #000 55%, transparent 100%);
+  mask-image: radial-gradient(circle 110px at var(--mx, -999px) var(--my, -999px), #000 55%, transparent 100%);
+}
+@media (hover: none) {
+  .wordmark-fill {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}
+
+.maplibregl-ctrl-attrib {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  background: rgba(245, 241, 234, 0.85) !important;
+}
+.maplibregl-ctrl-attrib a {
+  color: var(--ink-2);
+}
+.maplibregl-ctrl-group {
+  border-radius: 2px !important;
+  box-shadow: none !important;
+  border: 1px solid var(--line);
+}
+
+input[type='range'] {
+  accent-color: var(--route);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .amb-l1,
+  .amb-l2 {
+    animation: none;
+  }
+}
+
+/* Line drawings that draw themselves. Paths use pathLength="1". */
+.draw-svg [pathLength] {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset var(--draw-ms, 1400ms) var(--ease);
+}
+.draw-svg.is-drawn [pathLength] {
+  stroke-dashoffset: 0;
+}
+.draw-svg.is-drawn [pathLength]:nth-child(2) { transition-delay: 120ms; }
+.draw-svg.is-drawn [pathLength]:nth-child(3) { transition-delay: 240ms; }
+.draw-svg.is-drawn [pathLength]:nth-child(4) { transition-delay: 360ms; }
+.draw-svg.is-drawn [pathLength]:nth-child(5) { transition-delay: 480ms; }
+.draw-svg.is-drawn [pathLength]:nth-child(n + 6) { transition-delay: 600ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .draw-svg [pathLength] {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Bento card drawings redraw once on hover. */
+.bento-art [pathLength] {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+.bento:hover .bento-art [pathLength] {
+  animation: bento-draw 900ms var(--ease) both;
+}
+@keyframes bento-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
